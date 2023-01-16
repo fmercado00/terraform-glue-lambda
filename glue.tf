@@ -23,7 +23,7 @@ resource "aws_glue_job" "glue_job" {
   }
 
   command {
-    script_location = "s3://${aws_s3_bucket.demogluelambdasource0406.bucket}/${var.job_python_name}"
+    script_location = "s3://${aws_s3_bucket.source_bucket.bucket}/${var.job_python_name}"
   }
 
   depends_on = [
