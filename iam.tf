@@ -19,6 +19,9 @@ resource "aws_iam_role" "role" {
   ]
 }
 POLICY
+    depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 #######################################################
 #           ALLOW LAMBDA TO WRITE TO CLOUDWATCH
@@ -256,9 +259,15 @@ resource "aws_iam_policy" "policies" {
   ]
 }
 EOF
+    depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 
 resource "aws_iam_role_policy_attachment" "attachment" {
   role       = aws_iam_role.role.name
   policy_arn = aws_iam_policy.policies.arn
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }

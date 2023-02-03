@@ -3,11 +3,17 @@
 ####################################################### 
 resource "aws_s3_bucket" "source_bucket" {
   bucket = var.bucket_source_name
+  depends_on = [
+    null_resource.null_import_resources,
+  ]
 }
 
 resource "aws_s3_bucket_acl" "source_bucket_acl" {
   bucket = aws_s3_bucket.source_bucket.id
   acl    = var.s3_acl
+    depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 
 resource "aws_s3_bucket_versioning" "source_bucket_ver" {
@@ -15,17 +21,26 @@ resource "aws_s3_bucket_versioning" "source_bucket_ver" {
   versioning_configuration {
     status = var.s3_bucket_versioning
   }
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 #######################################################
 #                   S3 Target Bucket
 #######################################################
 resource "aws_s3_bucket" "target_bucket" {
   bucket = var.bucket_target_name
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 
 resource "aws_s3_bucket_acl" "target_bucket_acl" {
   bucket = aws_s3_bucket.target_bucket.id
   acl    = var.s3_acl
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 
 resource "aws_s3_bucket_versioning" "target_bucket_ver" {
@@ -33,6 +48,9 @@ resource "aws_s3_bucket_versioning" "target_bucket_ver" {
   versioning_configuration {
     status = var.s3_bucket_versioning
   }
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 #######################################################
 #                   S3 lambda permissions
@@ -43,6 +61,9 @@ resource "aws_lambda_permission" "allow_s3_invocation" {
   function_name = aws_lambda_function.lambda_fn.arn
   principal     = "s3.amazonaws.com"
   source_arn    = "arn:aws:s3:::${aws_s3_bucket.source_bucket.id}"
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 #######################################################
 #                   S3 lambda trigger
@@ -54,4 +75,7 @@ resource "aws_s3_bucket_notification" "lambda_fn_trigger" {
     events                = ["s3:ObjectCreated:*"]
     filter_suffix         = ".csv"
   }
+      depends_on = [
+      null_resource.null_import_resources,
+    ]
 }

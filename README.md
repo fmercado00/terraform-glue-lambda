@@ -22,11 +22,28 @@ Recursos que serán creados en terraform son:
 * La creación del job y la asignación del codigo en python.
 * El S3 bucket donde almacenaremos el archivo resultante del proceso de la limpieza.
 
-Iniciaremos con la declaración de las variables necesarias para este ejemplo, crea un archivo `variables.tf` que contenga lo siguiente:
+Iniciaremos con la creación del archivo `provider.tf` donde indicaremos el provedor en la nube que utilizaremos, la versión de hashicorp y la región donde desplegaremos los recursos. El archivo debe tener lo siguiente:
 ```
-############################################################
+terraform {
+  required_version = ">= 0.13"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.30"
+    }
+  }
+}
+provider "aws" {
+  region = "us-east-2"
+}
+```
+
+Ahora seguiremos con la declaración de las variables necesarias para nuestra aplicación, crea un archivo `variables.tf` que contenga lo siguiente:
+```
+#-----------------------------------------------------------
 #                    IAM Variables
-############################################################
+#-----------------------------------------------------------
 variable "role_name" {
   description = "The name of the role"
   type        = string
@@ -36,9 +53,9 @@ variable "log_policy_name" {
   description = "The name of the log policy"
   type        = string
 }
-############################################################
+#-----------------------------------------------------------
 #                    GLUE Variables
-############################################################
+#-----------------------------------------------------------
 variable "job_name" {
   description = "The name of the job"
   type        = string
@@ -64,9 +81,9 @@ variable "job_python_name" {
   type        = string
 }
 
-############################################################
+#-----------------------------------------------------------
 #                    S3 BUCKETS Variables
-############################################################
+#-----------------------------------------------------------
 variable "bucket_source_name" {
   description = "The name of the source bucket"
   type        = string
@@ -87,9 +104,9 @@ variable "s3_bucket_versioning" {
   type        = string
 }
 
-#######################################################
+#-----------------------------------------------------------
 #                   LAMBDA
-####################################################### 
+#----------------------------------------------------------- 
 
 variable "lambda_function_name" {
   description = "The name of the lambda function"
@@ -108,6 +125,8 @@ variable "lambda_timeout" {
 
 ```
 En el codigo anterior se observa que se ha dividido en secciones las variables para identificar en que archivo son utlizadas.
+
+En AWS debemos crear un rol y asignarle los permisos minimos necesarios para las tareas que realizará nuestra aplicación.
 
 
 

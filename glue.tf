@@ -3,7 +3,9 @@ resource "aws_s3_object" "file_upload" {
   key    = "demo_glue_job_code.py"
   source = local.glue_py_source_code
   etag   = filemd5(local.glue_py_source_code)
-
+    depends_on = [
+      null_resource.null_import_resources,
+    ]
 }
 
 #######################################################
@@ -29,5 +31,6 @@ resource "aws_glue_job" "glue_job" {
   depends_on = [
      aws_s3_object.file_upload
   ]
+  
 }
 

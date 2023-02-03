@@ -19,6 +19,7 @@ resource "aws_lambda_function" "lambda_fn" {
   timeout           = var.lambda_timeout
 
   depends_on = [
+      null_resource.null_import_resources,
       data.archive_file.lambda_zip_file,
       aws_iam_role_policy_attachment.attachment,
       aws_cloudwatch_log_group.lambda_log_group,

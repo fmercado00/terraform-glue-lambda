@@ -17,7 +17,7 @@ job_python_name       = "demo_glue_job_code.py"
 bucket_source_name   = "demo-glue-lambda-source0406"
 bucket_target_name   = "demo-glue-lambda-target0406"
 s3_acl               = "private"
-s3_bucket_versioning = "Enabled"
+s3_bucket_versioning = "Disabled"
 #######################################################
 #                    Lambda                      
 ####################################################### 
