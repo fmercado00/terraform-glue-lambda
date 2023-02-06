@@ -673,3 +673,23 @@ resource "aws_cloudwatch_log_group" "job_log_group" {
   retention_in_days = 14
 }
 ```
+
+Los siguientes pasos son ejecutar los comandos:
+
+* Terraform init
+* Terraform validate
+* Terraform plan -var-file dev.tfvars
+* Terraform apply -var-file dev.tfvars
+
+Esto debera desplegar los recursos en tu cuenta de aws.
+
+Puedes probar tu despliegue subiendo al s3 bucket de origen el archivo csv que encuentras [aquí](https://github.com/fmercado00/terraform-glue-lambda/blob/main/sample2.csv)
+
+Finalmente aqui se muestra la estructura del directorio de la aplicación.
+<center>
+<img title="source_directory" alt="source_directory" src="./images/directory_structure.png">
+<p style="text-align: center;">Imagen 3. Estructura del directorio.</p>
+</center>
+
+## Descarga el código fuente del prototipo desde GitHub
+El código fuente completo del prototipo se puede encontrar en mi cuenta de GitHub fmercado00/terraform-glue-lambda, puedes descargarlo y practicar con él y espero haber contribuido al aprendizaje de algo nuevo sobre deplegar recursos utilizando Terraform,Python, AWS Lamda y Glue.
